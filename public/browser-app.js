@@ -33,7 +33,7 @@ fileFormDOM.addEventListener('submit', async (e) => {
     try {
 
         const product = { name: nameValue, price: priceValue, image: imageValue }
-
+        console.log(product);
         await axios.post(url, product);
         fetchProducts()
     } catch (error) {
