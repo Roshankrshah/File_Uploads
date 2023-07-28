@@ -5,6 +5,9 @@ const app = express();
 
 const connectDB = require('./db/connect');
 
+const notFoundMiddleware = require('./middleware/not-found');
+const errorHandlerMiddleware = require('./middleware/error-handler');
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
