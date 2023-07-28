@@ -4,6 +4,8 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const app = express();
 
+const productRouter = require('./routes/productRoutes');
+
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -24,6 +26,8 @@ app.use(fileUpload({useTempFiles: true}));
 app.get('/', (req, res) => {
     res.send("<h1>File Upload Starter</h1>");
 })
+
+app.use('/api/v1/products',productRouter)
 
 
 app.use(notFoundMiddleware);
