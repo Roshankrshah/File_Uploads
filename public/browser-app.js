@@ -18,7 +18,7 @@ imageInputDOM.addEventListener('change', async (e) => {
                 'Content-Type': 'multipart/form-data'
             }
         })
-        imageValue = src
+        imageValue = src;
     } catch (error) {
         imageValue = null
         console.log(error);
@@ -32,8 +32,7 @@ fileFormDOM.addEventListener('submit', async (e) => {
     const priceValue = priceInputDOM.value;
     try {
 
-        const product = { name: nameValue, price: priceValue, image: imageValue }
-        console.log(product);
+        const product = { name: nameValue, price: priceValue, image: imageValue };
         await axios.post(url, product);
         fetchProducts()
     } catch (error) {

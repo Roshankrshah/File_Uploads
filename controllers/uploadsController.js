@@ -3,14 +3,13 @@ const { StatusCodes } = require('http-status-codes');
 const CustomError = require('../errors');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
-const { Console } = require('console');
 
 const uploadProductImageLocal = async (req, res) => {
     if (!req.files) {
         throw new CustomError.BadRequestError('No File Uploaded');
     }
     const productImage = req.files.image;
-    if (!productImage.mimeType.startsWith('image')) {
+    if (!productImage.mimetype.startsWith('image')) {
         throw new CustomError.BadRequestError('Please Upload Image');
     }
 
@@ -18,13 +17,11 @@ const uploadProductImageLocal = async (req, res) => {
     if (productImage.size > maxSize) {
         throw new CustomError.BadRequestError('Please upload image smaller than 1MB');
     }
-
     const imagePath = path.join(
-        __dirname, '../public/uploads/' + `${productImage.name}`
+        __dirname, `../public/uploads/${productImage.name}`
     );
-
     await productImage.mv(imagePath);
-    return res.status(StatusCode.OK).json({ image: { src: `/uploads/${productImage.name}` } })
+    return res.status(StatusCodes.OK).json({ image: { src: `/uploads/${productImage.name}` } })
 };
 
 const uploadProductImage = async (req, res) => {
@@ -35,9 +32,7 @@ const uploadProductImage = async (req, res) => {
             folder: 'file-upload',
         }
     )
-    console.log(req.files.image.tempFilePath);
     fs.unlinkSync(req.files.image.tempFilePath);
-    console.log(result.secure_url);
     return res.status(StatusCodes.OK).json({ image: { src: result.secure_url } });
 };
 
